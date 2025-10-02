@@ -1,0 +1,75 @@
+type Jurusan {
+    id_jurusan: ID!
+    nama_jurusan: String!
+    create_at: DateTime
+    update_at: DateTime
+    delete_at: DateTime
+}
+
+"input untuk create"
+input CreateJurusanInput {
+    id_jurusan: ID!
+    nama_jurusan: String
+}
+
+"Info pagination"
+type PageInfo{
+    hasMorePages: Boolean!
+    currentPage: Int!
+    lastPage: Int!
+    perPage: Int!
+    total: Int!
+}
+
+"Wrapper untuk hasil pagination"
+type JurusanPaginator {
+    data: [Jurusan!]!
+    paginatorInfo: PageInfo!
+}
+
+extend type Query {
+    "Query semua data (tanpa pagination)"
+    allJurusan: [Jurusan!]!
+    @all(model: "App\\Models\\Jurusan\\Jurusan")
+
+    "Query dengan pagination + search"
+    allJurusanPaginate(
+        search: String
+        first: Int
+        page: Int
+    ): JurusanPaginator
+        @field(resolver: "App\\GraphQl\\Jurusan\Queries\\JurusanQuery@all")
+
+        "Query by ID"
+        jurusan(id_jurusan: ID! @eq(key: "id_jurusan")): Jurusan
+        @find(model: "App\\Models\\Jurusan\\Jurusan")
+
+        "Query by Nama (LIKE)"
+        jurusanByNama(nama_jurusan: String! @where(operator: "like", key: "nama_jurusan")): [Jurusan!]!
+        @all(model: "App\\Models\\Jurusan\\Jurusan") 
+}
+
+extend type Mutation {
+    "Tambah Jurusan"
+    createJurusan(input: CreateJurusanInput! @spread): Jurusan
+    @create(model: "App\Models\\Jurusan\\Jurusan")
+
+    "Update Jurusan"
+    updateJurusan(input: UpdateJurusanInput! @spread): Jurusan
+    @update(model: "App\\Models\\Jurusan\\Jurusan")
+
+    "Soft delete jurusan"
+    deleteJurusan(id_jurusan: ID! @eq(key: "id_jurusan")): Jurusan
+    @delete(model: "App\\Models\\Jurusan\\Jurusan")
+
+    "Restore data jurusan yang sudah soft delete"
+    RestoreJurusan(id_jurusan: ID!): Jurusan
+    @field(resolver: "App\\GraphQL\\Jurusan\\Mutations\\JurusanMutation@forceDelete")
+}
+
+"A datetime string with format 'Y-m-d H:i:s', e.g. '2018-05-23 13:43:32'.'"
+    scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+    scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+#import jurusan/schema.graphql
+
