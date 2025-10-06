@@ -64,12 +64,10 @@ extend type Mutation {
 
     "Restore data jurusan yang sudah soft delete"
     RestoreJurusan(id_jurusan: ID!): Jurusan
+    @field(resolver: "App\\GraphQL\\Jurusan\\Mutations\\JurusanMutation@restore")
+
+    "Hapus permanen jurusan (force Delete)"
+    forceDeleteJurusan(id_jurusan: ID!): Jurusan
     @field(resolver: "App\\GraphQL\\Jurusan\\Mutations\\JurusanMutation@forceDelete")
 }
-
-"A datetime string with format 'Y-m-d H:i:s', e.g. '2018-05-23 13:43:32'.'"
-    scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
-    scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
-
-#import jurusan/schema.graphql
 

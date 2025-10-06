@@ -1,0 +1,95 @@
+type Siswa {
+    id_siswa: ID!
+    nis: String!
+    nama: String!
+    id_kelas: String!
+    id_jurusan: String!
+    jenis_kelamin: String
+    tangga_lahir: Date
+    create_at: DateTime
+    update_at: DateTime
+    delete_at: DateTime
+}
+
+"input untuk create"
+input CreateSiswaInput {
+    nis: String!
+    nama: String!
+    id_kelas: String!
+    id_jurusan: String!
+    jenis_kelamin: String!
+    tangga_lahir: Date   
+}
+
+"Input untuk update"
+input UpdateSiswaInput {
+    id_siswa: ID!
+    nis: String
+    nama: String
+    id_kelas: Int
+    id_jurusan: Int
+    jenis_kelamin: String
+    tangga_lahir: Date
+}
+
+"Info pagination"
+type PageInfo{
+    hasMorePages: Boolean!
+    currentPage: Int!
+    lastPage: Int!
+    perPage: Int!
+    total: Int!
+}
+
+"Wrapper untuk hasil pagination"
+type SiswaPaginator {
+    data: [Siswa!]!
+    paginatorInfo: PageInfo!
+}
+
+extend type Query {
+    "Query semua data (tanpa pagination)"
+    allSiswa: [Siswa!]!
+    @all(model: "App\\Models\\Siswa\\Siswa")
+
+    "Query siswa dengan pagination + search by nama"
+    allSiswaPaginate(
+        search: String
+        first: Int
+        page: Int
+    ): SiswaPaginator
+        @field(resolver: "App\\GraphQl\\Siswa\Queries\\SiswaQuery@all")
+
+        "Ambil detail siswa by ID"
+        siswa(id_siswa: ID! @eq(key: "id_siswa")): Siswa
+        @find(model: "App\\Models\\Siswa\\Siswa")
+
+        "Cari siswa by Nama (LIKE)"
+        siswaByNama(nama: String! @where(operator: "like", key: "nama")): [Siswa!]!
+        @all(model: "App\\Models\\Siswa\\Siswa") 
+}
+
+extend type Mutation {
+    "Tambah Siswa"
+    createSiswa(input: CreateSiswaInput! @spread): Siswa
+    @create(model: "App\Models\\Siswa\\Siswa")
+
+    "Update Siswa"
+    updateSiswa(input: UpdateSiswaInput! @spread): Siswa
+    @update(model: "App\\Models\\Siswa\\Siswa")
+
+    "Soft delete siswa"
+    deleteJurusan(id_siswa: ID! @eq(key: "id_siswa")): Siswa
+    @delete(model: "App\\Models\\Siswa\\Siswa")
+
+    "Restore data siswa yang sudah soft delete"
+    RestoreSiswa(id_jurusan: ID!): Siswa
+    @field(resolver: "App\\GraphQL\\Siswa\\Mutations\\SiswaMutation@restore")
+
+    "Delete permanen siswa"
+    forceDeleteSiswa(id_siswa: ID!): Siswa
+    @field(resolver: "App\\GraphQL\\Siswa\\Mutations\\SiswaMutation@forceDelete")
+}
+
+
+

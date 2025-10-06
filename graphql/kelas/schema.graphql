@@ -1,0 +1,73 @@
+type Kelas {
+    id_kelas: ID!
+    nama_kelas: String!
+    create_at: DateTime
+    update_at: DateTime
+    delete_at: DateTime
+}
+
+"input untuk create"
+input CreateKelasInput {
+    id_kelas: ID!
+    nama_kelas: String
+}
+
+"Info pagination"
+type PageInfo{
+    hasMorePages: Boolean!
+    currentPage: Int!
+    lastPage: Int!
+    perPage: Int!
+    total: Int!
+}
+
+"Wrapper untuk hasil pagination"
+type KelasPaginator {
+    data: [Kelas!]!
+    paginatorInfo: PageInfo!
+}
+
+extend type Query {
+    "Query semua data (tanpa pagination)"
+    allKelas: [Kelas!]!
+    @all(model: "App\\Models\\Kelas\\Kelas")
+
+    "Query dengan pagination + search"
+    allKelasPaginate(
+        search: String
+        first: Int
+        page: Int
+    ): KelasPaginator
+        @field(resolver: "App\\GraphQl\\Kelas\Queries\\KelasQuery@all")
+
+        "Query by ID"
+        kelas(id_kelas: ID! @eq(key: "id_kelas")): Kelas
+        @find(model: "App\\Models\\Kelas\\Kelas")
+
+        "Query by Nama (LIKE)"
+        kelasByNama(nama_kelas: String! @where(operator: "like", key: "nama_kelas")): [Kelas!]!
+        @all(model: "App\\Models\\Kelas\\Kelas") 
+}
+
+extend type Mutation {
+    "Tambah Kelas"
+    createKelas(input: CreateKelasInput! @spread): Kelas
+    @create(model: "App\Models\\Jurusan\\Jurusan")
+
+    "Update Kelas"
+    updateKelas(input: UpdateKelasInput! @spread): Kelas
+    @update(model: "App\\Models\\Jurusan\\Jurusan")
+
+    "Soft delete Kelas"
+    deleteKelas(id_kelas: ID! @eq(key: "id_kelas")): Kelas
+    @delete(model: "App\\Models\\Kelas\\Kelas")
+
+    "Restore data kelas yang sudah soft delete"
+    RestoreKelas(id_kelas: ID!): Kelas
+    @field(resolver: "App\\GraphQL\\Kelas\\Mutations\\KelasMutation@restore")
+
+    "Hapus permanen kelas (force Delete)"
+    forceDeleteKelas(id_kelas: ID!): Kelas
+    @field(resolver: "App\\GraphQL\\Kelas\\Mutations\\KelasMutation@forceDelete")
+}
+
