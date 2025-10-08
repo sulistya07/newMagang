@@ -1,9 +1,9 @@
-<X-layout.main>
-    <section class="=max-w-7xl mx-auto px-6 py-10">
-        <h1 class="=text-3xl font-bold text-indigo-700 mb-6">Daftar Ekstrakurikuler</h1>
+<x-layouts.main>
+    <section class="max-w-7xl mx-auto px-6 py-10">
+        <h1 class="text-3xl font-bold text-indigo-700 mb-6">Daftar Ekstrakurikuler</h1>
 
         {{--Tombol Tambah & Search --}}
-        <div class="=flex items-center justify-between mb4 gap-4">
+        <div class="flex items-center justify-between mb-4 gap-4">
             <a href="{{ route('ekstrakurikuler.create') }}"
                 class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
                 + Tambah Ekstrakurikuler
@@ -62,4 +62,4 @@
         const csrfToken = "{{ csrf_token() }}";
     </script>
     <script src="{{ asset('js/ekstrakurikuler/ekstrakurikuler.js') }}"></script>
-</X-layout.main>
+</x-layouts.main>

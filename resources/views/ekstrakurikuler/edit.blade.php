@@ -1,11 +1,16 @@
 <x-layouts.main>
 <div class= "p-4">
-    <h2 class="text=xl font-bold mb-4">Edit Ekstrakurikuler</h2>
+    <h2 class="text-xl font-bold mb-4">Edit Ekstrakurikuler</h2>
     <!-- Notifikasi -->
     <div id="notification" class="hidden"></div>
 
     <form id="editEkskulForm">
         <input type="hidden" id="id_ekskul">
+
+        <div class="mb-2">
+            <label class="block">Nama Ekskul</label>
+            <input type="text" id="nama_ekskul" class="border p-2 w-full">
+        </div>
 
         <div class="mb-2">
             <label class="block">Pembina</label>
