@@ -31,7 +31,7 @@ setTimeout(() => {
 }
 
 // =========== LIST DATA ===========
-async function loadEkastrakurikuler(page = 1) {
+async function loadEkstrakurikuler(page = 1) {
     isSearching = false;
     lastSearchTerm = "";
     const query = `
@@ -107,7 +107,7 @@ async function searchEkastrakurikuler() {
         const response = await fetch("/graphql", {
             method: "POST",
             header: {
-                "Content-Type: application/json",
+                "Content-Type": "application/json",
                 "X-CSRF-Token": csrfToken
             },
             body: JSON.stringify({query})
@@ -228,7 +228,7 @@ async function confirmDeleteEkstrakurikuler() {
             }
         `;
         const response = await fetch("/graphql", {
-            method: "POST";
+            method: "POST",
             header: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken

@@ -3,11 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Login\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Ekstrakurikuler\LandingController;
 
 //Landing Page
-Route::get('/', function () {
-    return view('landing', ['title' => 'Ekstrakurikuler Siswa Smkn 7 Batam']);
-})->name('landing');
+Route::get('/', [LandingController::class, 'index'])->name('landing'); 
 
 //Login
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -19,9 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Ekstrakurikuler
-    Route::view('/ekstrakurikuler','ekastrakurikuler.index')->name('ekstrakurikuler.index');
-    Route::view('/ekstrakurikuler/create', 'ekastrakurikuler.create')->name('ekstrakurikuler.create');
+    Route::view('/ekstrakurikuler/index','ekstrakurikuler.index')->name('ekstrakurikuler.index');
+    Route::view('/ekstrakurikuler/create', 'ekstrakurikuler.create')->name('ekstrakurikuler.create');
     Route::view('/ekstrakurikuler/edit', 'ekstrakurikuler.edit')->name('ekstrakurikuler.edit');
-    Route::view('/ekstrakurikuler/delete', 'ekastrakurikuler.delete')->name('ekstrakurikuler.delete');
+    Route::view('/ekstrakurikuler/delete', 'ekstrakurikuler.delete')->name('ekstrakurikuler.delete');
 });
 
