@@ -58,7 +58,7 @@ extend type Query {
         first: Int
         page: Int
     ): SiswaPaginator
-        @field(resolver: "App\\GraphQl\\Siswa\Queries\\SiswaQuery@all")
+        @field(resolver: "App\\Graphql\\Siswa\Queries\\SiswaQuery@all")
 
         "Ambil detail siswa by ID"
         siswa(id_siswa: ID! @eq(key: "id_siswa")): Siswa
@@ -84,11 +84,11 @@ extend type Mutation {
 
     "Restore data siswa yang sudah soft delete"
     RestoreSiswa(id_jurusan: ID!): Siswa
-    @field(resolver: "App\\GraphQL\\Siswa\\Mutations\\SiswaMutation@restore")
+    @field(resolver: "App\\Graphql\\Siswa\\Mutations\\SiswaMutation@restore")
 
     "Delete permanen siswa"
     forceDeleteSiswa(id_siswa: ID!): Siswa
-    @field(resolver: "App\\GraphQL\\Siswa\\Mutations\\SiswaMutation@forceDelete")
+    @field(resolver: "App\\Graphql\\Siswa\\Mutations\\SiswaMutation@forceDelete")
 }
 
 

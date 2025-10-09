@@ -38,7 +38,7 @@ extend type Query {
         first: Int
         page: Int
     ): JurusanPaginator
-        @field(resolver: "App\\GraphQl\\Jurusan\Queries\\JurusanQuery@all")
+        @field(resolver: "App\\Graphql\\Jurusan\Queries\\JurusanQuery@all")
 
         "Query by ID"
         jurusan(id_jurusan: ID! @eq(key: "id_jurusan")): Jurusan
@@ -64,10 +64,10 @@ extend type Mutation {
 
     "Restore data jurusan yang sudah soft delete"
     RestoreJurusan(id_jurusan: ID!): Jurusan
-    @field(resolver: "App\\GraphQL\\Jurusan\\Mutations\\JurusanMutation@restore")
+    @field(resolver: "App\\Graphql\\Jurusan\\Mutations\\JurusanMutation@restore")
 
     "Hapus permanen jurusan (force Delete)"
     forceDeleteJurusan(id_jurusan: ID!): Jurusan
-    @field(resolver: "App\\GraphQL\\Jurusan\\Mutations\\JurusanMutation@forceDelete")
+    @field(resolver: "App\\Graphql\\Jurusan\\Mutations\\JurusanMutation@forceDelete")
 }
 

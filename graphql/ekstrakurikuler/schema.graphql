@@ -1,0 +1,76 @@
+type Ekstrakurikuler {
+    id_ekskul: ID!
+    nama_ekskul: String!
+    pembina: String!
+    jadwal: String!
+    kuota: String!
+    create_at: DateTime
+    update_at: DateTime
+    delete_at: DateTime
+}
+
+"input untuk create"
+input CreateEkstrakurikulerInput {
+    id_ekskul: ID!
+    nama_ekskul: String
+}
+
+"Info pagination"
+type PageInfo{
+    hasMorePages: Boolean!
+    currentPage: Int!
+    lastPage: Int!
+    perPage: Int!
+    total: Int!
+}
+
+"Wrapper untuk hasil pagination"
+type EkstrakurikulerPaginator {
+    data: [Ekstrakurikuler!]!
+    paginatorInfo: PageInfo!
+}
+
+extend type Query {
+    "Query semua data (tanpa pagination)"
+    allEkstrakurikuler: [Ekstrakurikuler!]!
+    @all(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
+
+    "Query dengan pagination + search"
+    allEkstrakurikulerPaginate(
+        search: String
+        first: Int
+        page: Int
+    ): EkstrakurikulerPaginator
+        @field(resolver: "App\\GraphQL\\Ekstrakurikuler\Queries\\EkstrakurikulerQuery@all")
+
+        "Query by ID"
+        ekstrakurikuler(id_ekskul: ID! @eq(key: "id_ekskul")): Ekstrakurikuler
+        @find(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
+
+        "Query by Nama (LIKE)"
+        ekstrakurikulerByNama(nama_ekskul: String! @where(operator: "like", key: "nama_ekskul")): [Ekstrakurikuler!]!
+        @all(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler") 
+}
+
+extend type Mutation {
+    "Tambah Ekstrakurikuler"
+    createEkstrakurikuler(input: CreateEkstrakurikulerInput! @spread): Ekstrakurikuler
+    @create(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
+
+    "Update Ekstrakurikuler"
+    updateEkstrakurikuler(input: UpdateEkstrakurikulerInput! @spread): Ekstrakurikuler
+    @update(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
+
+    "Soft delete Ekstrakurikuler"
+    deleteEkstrakurikuler(id_ekskul: ID! @eq(key: "id_ekskul")): Ekstrakurikuler
+    @delete(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
+
+    "Restore data Ekstrakurikuler yang sudah soft delete"
+    RestoreEkstrakurikuler(id_ekskul: ID!): Ekstrakurikuler
+    @field(resolver: "App\\GraphQL\\Ekstrakurikuler\\Mutations\\EkstrakurikulerMutation@restore")
+
+    "Hapus permanen Ekstrakurikuler (force Delete)"
+    forceDeleteEkstrakurikuler(id_ekskul: ID!): Ekstrakurikuler
+    @field(resolver: "App\\GraphQL\\Ekstrakurikuler\\Mutations\\EkstrakurikulerMutation@forceDelete")
+}
+

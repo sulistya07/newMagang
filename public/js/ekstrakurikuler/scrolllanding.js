@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(() => {
         if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
             // balik ke awal kalau sudah mentok kanan
-            slider.scrollTo({ left: 0, behavior: "smooth"});
+            slider.scrollTo({ left: 0, behavior: "smooth" });
             scrollAmount = 0;
         } else {
             scrollAmount += scrollStep;
