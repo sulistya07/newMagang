@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Graphql\Kelas\Queries;
+namespace App\GraphQL\Kelas\Queries;
 
 use App\Models\Kelas\Kelas;
 
@@ -24,9 +24,9 @@ class KelasQuery
             'data' => $paginator->items(),
             'paginatorInfo' => [
                 'hasMorePages' => $paginator->hasMorePages(),
-                'currentPage' => $paginator->currentPages(),
-                'lastPage' => $paginator->lastPages(),
-                'perPage' => $paginator->perPages(),
+                'currentPage' => $paginator->currentPage(),
+                'lastPage' => $paginator->lastPage(),
+                'perPage' => $paginator->perPage(),
                 'total' => $paginator->total(),
             ],
         ];

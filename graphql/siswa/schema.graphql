@@ -6,9 +6,9 @@ type Siswa {
     id_jurusan: String!
     jenis_kelamin: String
     tangga_lahir: Date
-    create_at: DateTime
-    update_at: DateTime
-    delete_at: DateTime
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
 }
 
 "input untuk create"
@@ -58,7 +58,7 @@ extend type Query {
         first: Int
         page: Int
     ): SiswaPaginator
-        @field(resolver: "App\\Graphql\\Siswa\Queries\\SiswaQuery@all")
+        @field(resolver: "App\\GraphQL\\Siswa\\Queries\\SiswaQuery@all")
 
         "Ambil detail siswa by ID"
         siswa(id_siswa: ID! @eq(key: "id_siswa")): Siswa
@@ -72,23 +72,23 @@ extend type Query {
 extend type Mutation {
     "Tambah Siswa"
     createSiswa(input: CreateSiswaInput! @spread): Siswa
-    @create(model: "App\Models\\Siswa\\Siswa")
+    @create(model: "App\\Models\\Siswa\\Siswa")
 
     "Update Siswa"
     updateSiswa(input: UpdateSiswaInput! @spread): Siswa
     @update(model: "App\\Models\\Siswa\\Siswa")
 
     "Soft delete siswa"
-    deleteJurusan(id_siswa: ID! @eq(key: "id_siswa")): Siswa
+    deleteSiswa(id_siswa: ID! @eq(key: "id_siswa")): Siswa
     @delete(model: "App\\Models\\Siswa\\Siswa")
 
     "Restore data siswa yang sudah soft delete"
     RestoreSiswa(id_jurusan: ID!): Siswa
-    @field(resolver: "App\\Graphql\\Siswa\\Mutations\\SiswaMutation@restore")
+    @field(resolver: "App\\GraphQL\\Siswa\\Mutations\\SiswaMutation@restore")
 
     "Delete permanen siswa"
     forceDeleteSiswa(id_siswa: ID!): Siswa
-    @field(resolver: "App\\Graphql\\Siswa\\Mutations\\SiswaMutation@forceDelete")
+    @field(resolver: "App\\GraphQL\\Siswa\\Mutations\\SiswaMutation@forceDelete")
 }
 
 

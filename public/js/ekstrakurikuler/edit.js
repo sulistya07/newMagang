@@ -10,6 +10,7 @@ function showNotification(message, type = "success") {
     } else {
         notif.classList.add("bg-red-500", "text-white");
     }
+        notif.classList.remove("hidden");
 
         // auto hilang
         setTimeout(() => {
@@ -36,7 +37,7 @@ async function getEkskulById(id) {
     `;
     const res = await fetch("/graphql", {
         method: "POST",
-        header: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ query })
     });
     const result = await res.json();
@@ -65,6 +66,9 @@ document.getElementById("editEkskulForm").addEventListener("submit", async (e) =
             updateEkstrakurikuler(input: $input) {
                 id_ekskul
                 nama_ekskul
+                pembina
+                jadwal
+                kuota
                 updated_at
             }  
         }
@@ -74,7 +78,7 @@ document.getElementById("editEkskulForm").addEventListener("submit", async (e) =
             id_ekskul: parseInt(document.getElementById("id_ekskul").value),
             nama_ekskul: document.getElementById("nama_ekskul").value,
             pembina: document.getElementById("pembina").value,
-            jadwal: parseInt.getElementById("jadwal").value,
+            jadwal: document.getElementById("jadwal").value,
             kuota: parseInt(document.getElementById("kuota").value)
         }
     };
@@ -82,7 +86,7 @@ document.getElementById("editEkskulForm").addEventListener("submit", async (e) =
     try {
         const res = await fetch("/graphql", {
             method: "POST",
-            header: {
+            headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken
             },
@@ -98,9 +102,9 @@ document.getElementById("editEkskulForm").addEventListener("submit", async (e) =
         }
 
         if (result.data?.updateEkstrakurikuler) {
-            showNotification("Data berhasil diperbarui!", "success");
+            (showNotification("Data berhasil diperbarui!", "success"));
             setTimeout(() => {
-                window.location.href = "/ekstrakurikuler";
+                window.location.href = "/ekstrakurikuler/index";
             }, 1500)
         }
 

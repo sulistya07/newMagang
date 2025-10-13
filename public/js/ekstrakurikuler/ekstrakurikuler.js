@@ -47,7 +47,7 @@ async function loadEkstrakurikuler(page = 1) {
             paginatorInfo {
                 currentPage
                 lastPage
-                hasMorePage
+                hasMorePages
                 total
             }
         }
@@ -106,15 +106,15 @@ async function searchEkstrakurikuler() {
     try {
         const response = await fetch("/graphql", {
             method: "POST",
-            header: {
+            headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-Token": csrfToken
             },
             body: JSON.stringify({ query })
         });
         const result = await response.json();
-        if (result.error) throw result.error;
-        renderTable(result.data.ekstrakurikulerBynama || []);
+        if (result.errors) throw result.errors;
+        renderTable(result.data.ekstrakurikulerByNama || []);
         document.getElementById("pagination").innerHTML = "";
     } catch (err) {
         console.error("Error searchEkstrakurikuler:", err);
@@ -129,11 +129,11 @@ async function searchEkstrakurikuler() {
 function renderTable(items) {
     const tbody = document.getElementById("ekskulTable");
     tbody.innerHTML = "";
-    if (!items || items.lenght === 0) {
+    if (!items || items.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">Belum Ada Data</td></tr>`;
         return;
     }
-    items.forEach((items) => {
+    items.forEach((item) => {
         tbody.innerHTML += `
         <tr>
             <td class="border px-4 py-2">${item.id_ekskul}</td>
@@ -143,7 +143,7 @@ function renderTable(items) {
             <td class="border px-4 py-2">${item.kuota ?? '-'}</td>
             <td class="border px-4 py-2 space-x-2">
             <a href="/ekstrakurikuler/edit?id=${item.id_ekskul}" class="text-blue-600 hover:underline">Edit</a>
-            <button onclick="openDeleteModel(${item.id_ekskul}, '${item.nama_ekskul}')" class="text-red-600 hover:underline">Hapus</button>
+            <button onclick="openDeleteModal(${item.id_ekskul}, '${item.nama_ekskul}')" class="text-red-600 hover:underline">Hapus</button>
             </td> 
         </tr>
         `;
@@ -154,11 +154,11 @@ function renderTable(items) {
 // ============ RENDER PAGINATION =============
 function renderPagination(info) {
     currentPage = info.currentPage;
-    lastPage = Infinity.lastPage;
+    lastPage = info.lastPage;
     const pagination = document.getElementById("pagination");
-    let pageOption = "";
+    let pageOptions = "";
     for (let i = 1; i <= lastPage; i++) {
-        pageOption += `<option value="${i}" ${i === currentPage ? "selected" : ""}>Halaman ${i}</option>`;
+        pageOptions += `<option value="${i}" ${i === currentPage ? "selected" : ""}>Halaman ${i}</option>`;
     }
 
     pagination.innerHTML = `
@@ -176,12 +176,12 @@ function renderPagination(info) {
         <div class="flex items-center gap-2">
         <button ${currentPage <= 1 ? "disabled" : ""}
             onclick="loadEkstrakurikuler(${currentPage - 1})"
-            class="px-3 py-1 border rounded ${currentPage <= 1 ? 'bg-gray-200 text-gray-400' : 'bg-white hover"bg-gray-100'}">
+            class="px-3 py-1 border rounded ${currentPage <= 1 ? 'bg-gray-200 text-gray-400' : 'bg-white hover:bg-gray-100'}">
             ← Prev
         </button>
 
         <select onchange="loadEkstrakurikuler(this.value)" class="border px-2 py-1 rounded">
-            ${pageOption}
+            ${pageOptions}
         </select>
 
             <button ${currentPage >= lastPage ? "disabled" : ""}
@@ -192,7 +192,7 @@ function renderPagination(info) {
     `;
 }
 
-function changePerPage() {
+function changePerPage(value) {
     perPage = parseInt(value);
     loadEkstrakurikuler(1);
 }
@@ -229,7 +229,7 @@ async function confirmDeleteEkstrakurikuler() {
         `;
         const response = await fetch("/graphql", {
             method: "POST",
-            header: {
+            headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken
             },
@@ -242,7 +242,7 @@ async function confirmDeleteEkstrakurikuler() {
             showNotification("Gagal menghapus data!", "error");
             return;
         }
-        showNotification("Data berhasil dihapus", "seccess");
+        showNotification("Data berhasil dihapus", "success");
         closeDeleteModal();
 
         if (isSearching && lastSearchTerm) {
@@ -252,8 +252,8 @@ async function confirmDeleteEkstrakurikuler() {
         }
     } catch (err) {
         console.error("deleteEkstrakurikuler error", err);
-        showNotification("Terjadi kesalahan saat menghpus!", "error");
-        closeDeleteModal;
+        showNotification("Terjadi kesalahan saat menghapus!", "error");
+        closeDeleteModal();
     }
 }
 

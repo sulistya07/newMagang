@@ -30,4 +30,5 @@ class Ekstrakurikuler extends Model
     {
         return $this->nama_ekskul;
     }
+    
 }

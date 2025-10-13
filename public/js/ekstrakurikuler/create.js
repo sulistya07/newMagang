@@ -45,7 +45,7 @@ document.getElementById("createForm").addEventListener("submit", async function 
     try {
         const response = await fetch("/graphql", {
             method: "POST",
-            header: {
+            headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": csrfToken,
             },
@@ -59,10 +59,10 @@ document.getElementById("createForm").addEventListener("submit", async function 
             return;
         }
         if (result.data?.createEkstrakurikuler) {
-            showNotification("Data berhasil ditambah!", "success");
+            console.log(showNotification("Data berhasil ditambah!", "success"));
 
             setTimeout(() => {
-                window.location.href = "/ekstrakurikuler"; // redirect ke index
+                window.location.href = "/ekstrakurikuler/index"; // redirect ke index
             }, 1500);
         }
     } catch (err) {

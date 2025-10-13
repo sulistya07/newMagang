@@ -40,7 +40,7 @@
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="bg-indigo-100 text-left">
-                        <th class="px-4 py-2 border">#</th>
+                        <th class="px-4 py-2 border">Id</th>
                         <th class="px-4 py-2 border">Nama Ekstrakurikuler</th>
                         <th class="px-4 py-2 border">Pembina</th>
                         <th class="px-4 py-2 border">Jadwal</th>

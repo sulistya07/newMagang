@@ -3,16 +3,27 @@ type Ekstrakurikuler {
     nama_ekskul: String!
     pembina: String!
     jadwal: String!
-    kuota: String!
-    create_at: DateTime
-    update_at: DateTime
-    delete_at: DateTime
+    kuota: Int!
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
 }
 
 "input untuk create"
 input CreateEkstrakurikulerInput {
+    nama_ekskul: String!
+    pembina: String!
+    jadwal: String!
+    kuota: Int!
+}
+
+"Input untuk update"
+input UpdateEkstrakurikulerInput {
     id_ekskul: ID!
     nama_ekskul: String
+    pembina: String
+    jadwal: String
+    kuota: Int
 }
 
 "Info pagination"
@@ -35,16 +46,16 @@ extend type Query {
     allEkstrakurikuler: [Ekstrakurikuler!]!
     @all(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
 
-    "Query dengan pagination + search"
+    "Query Ekstrakurikuler dengan pagination + search"
     allEkstrakurikulerPaginate(
         search: String
         first: Int
         page: Int
     ): EkstrakurikulerPaginator
-        @field(resolver: "App\\GraphQL\\Ekstrakurikuler\Queries\\EkstrakurikulerQuery@all")
+        @field(resolver: "App\\GraphQL\\Ekstrakurikuler\\Queries\\EkstrakurikulerQuery@all")
 
-        "Query by ID"
-        ekstrakurikuler(id_ekskul: ID! @eq(key: "id_ekskul")): Ekstrakurikuler
+    "Ambil detail Ekstrakurikuler by ID"
+    ekstrakurikuler(id_ekskul: ID! @eq(key: "id_ekskul")): Ekstrakurikuler
         @find(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
 
         "Query by Nama (LIKE)"
@@ -65,8 +76,8 @@ extend type Mutation {
     deleteEkstrakurikuler(id_ekskul: ID! @eq(key: "id_ekskul")): Ekstrakurikuler
     @delete(model: "App\\Models\\Ekstrakurikuler\\Ekstrakurikuler")
 
-    "Restore data Ekstrakurikuler yang sudah soft delete"
-    RestoreEkstrakurikuler(id_ekskul: ID!): Ekstrakurikuler
+    "Restore data Ekstrakurikuler yang dihapus (soft delete)"
+    restoreEkstrakurikuler(id_ekskul: ID!): Ekstrakurikuler
     @field(resolver: "App\\GraphQL\\Ekstrakurikuler\\Mutations\\EkstrakurikulerMutation@restore")
 
     "Hapus permanen Ekstrakurikuler (force Delete)"

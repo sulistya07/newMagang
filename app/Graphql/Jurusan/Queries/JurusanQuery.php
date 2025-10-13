@@ -1,5 +1,5 @@
 <?php
-namespace App\Graphql\Jurusan\Queries;
+namespace App\GraphQL\Jurusan\Queries;
 
 use App\Models\Jurusan\Jurusan;
 
@@ -24,8 +24,8 @@ class JurusanQuery
             'paginatorInfo' => [
                 'hasMorePages' => $paginator->hasMorePages(),
                 'currentPage' => $paginator->currentPages(),
-                'lastPage' => $paginator->lastPages(),
-                'perPage' => $paginator->perPages(),
+                'lastPage' => $paginator->lastPage(),
+                'perPage' => $paginator->perPage(),
                 'total' => $paginator->total(),
             ],
         ];

@@ -9,7 +9,7 @@
     @forelse ($ekskul as $item)
         <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-xl shadow hover:shadow-lg transition p-4 snap-center">
             <div class="w-full h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-4">
-                <img src="{{ asset('images/smkn7.png')}}"
+                <img src="{{ asset('images/smkn7.png') }}"
                     class="max-h-48 object-contain"
                     alt="{{ $item->nama_ekskul }}">
             </div>

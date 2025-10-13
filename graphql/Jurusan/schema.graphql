@@ -1,9 +1,9 @@
 type Jurusan {
     id_jurusan: ID!
     nama_jurusan: String!
-    create_at: DateTime
-    update_at: DateTime
-    delete_at: DateTime
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
 }
 
 "input untuk create"
@@ -38,7 +38,7 @@ extend type Query {
         first: Int
         page: Int
     ): JurusanPaginator
-        @field(resolver: "App\\Graphql\\Jurusan\Queries\\JurusanQuery@all")
+        @field(resolver: "App\\GraphQL\\Jurusan\\Queries\\JurusanQuery@all")
 
         "Query by ID"
         jurusan(id_jurusan: ID! @eq(key: "id_jurusan")): Jurusan
@@ -52,7 +52,7 @@ extend type Query {
 extend type Mutation {
     "Tambah Jurusan"
     createJurusan(input: CreateJurusanInput! @spread): Jurusan
-    @create(model: "App\Models\\Jurusan\\Jurusan")
+    @create(model: "App\\Models\\Jurusan\\Jurusan")
 
     "Update Jurusan"
     updateJurusan(input: UpdateJurusanInput! @spread): Jurusan
@@ -64,10 +64,10 @@ extend type Mutation {
 
     "Restore data jurusan yang sudah soft delete"
     RestoreJurusan(id_jurusan: ID!): Jurusan
-    @field(resolver: "App\\Graphql\\Jurusan\\Mutations\\JurusanMutation@restore")
+    @field(resolver: "App\\GraphQL\\Jurusan\\Mutations\\JurusanMutation@restore")
 
     "Hapus permanen jurusan (force Delete)"
     forceDeleteJurusan(id_jurusan: ID!): Jurusan
-    @field(resolver: "App\\Graphql\\Jurusan\\Mutations\\JurusanMutation@forceDelete")
+    @field(resolver: "App\\GraphQL\\Jurusan\\Mutations\\JurusanMutation@forceDelete")
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Graphql\Siswa\Queries;
+namespace App\GraphQL\Siswa\Queries;
 
 use App\Models\Siswa\Siswa;
 
@@ -12,12 +12,10 @@ class SiswaQuery
 
         //Search by nis dan nama
         if (!empty($args['search'])) {
-            $search = $args['search'];
-            $query->where(function ($q) use ($search) {
-                $q->where('nis', 'like', '%' . $search . '%')
-                    ->orWhere('nama', 'like', '%' . $search . '%');
-            });
-        }
+                 $query->where('nis', 'like', '%' . $args[ 'search' ]. '%')
+                    ->orWhere('nama', 'like', '%' . $args[ 'search' ] . '%');
+            }
+        
 
         $perPage = $args['first'] ?? 10;
         $page = $args['page'] ?? 1;
