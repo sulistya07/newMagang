@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2025 at 04:52 AM
+-- Generation Time: Oct 13, 2025 at 06:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -107,7 +107,7 @@ CREATE TABLE `ekstrakurikuler` (
   `kuota` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -119,15 +119,15 @@ INSERT INTO `ekstrakurikuler` (`id_ekskul`, `nama_ekskul`, `pembina`, `jadwal`, 
 (4, 'Robotik', 'Wahid', '15/10/2015', 10, '2025-10-09 07:31:16', '2025-10-09 07:31:16', '2025-10-09 14:31:16'),
 (5, 'Mading', 'bu Lila', '15/10/2015', 10, '2025-10-09 18:33:58', '2025-10-09 18:33:58', '0000-00-00 00:00:00'),
 (7, 'Hadroh', 'Bu Helmi', 'Setiap hari Jumat', 15, '2025-10-10 02:41:55', '2025-10-10 02:41:55', '2025-10-10 02:41:55'),
-(8, 'Futsal', 'Pak Tio', 'Selasa dan kamis', 20, '2025-10-10 02:43:43', '2025-10-10 02:43:43', NULL),
-(9, 'Silat', 'Pak Bayu', 'Sabtu', 20, '2025-10-10 02:49:48', '2025-10-10 02:49:48', NULL),
-(10, 'Pramuka (Putra)', 'Pak Is', 'Sabtu', 50, '2025-10-09 19:56:20', '2025-10-09 21:40:25', NULL),
-(11, 'Pramuka (Putri)', 'Bu Fizah', 'Sabtu', 50, '2025-10-09 19:56:20', '2025-10-09 21:40:40', NULL),
+(8, 'Futsal', 'Pak Tio', 'Selasa dan kamis', 20, '2025-10-10 02:43:43', '2025-10-10 02:43:43', '2025-10-13 04:18:00'),
+(9, 'Silat', 'Pak Bayu', 'Sabtu', 20, '2025-10-10 02:49:48', '2025-10-10 02:49:48', '2025-10-13 04:18:00'),
+(10, 'Pramuka (Putra)', 'Pak Is', 'Sabtu', 50, '2025-10-09 19:56:20', '2025-10-09 21:40:25', '2025-10-13 04:18:00'),
+(11, 'Pramuka (Putri)', 'Bu Fizah', 'Sabtu', 50, '2025-10-09 19:56:20', '2025-10-09 21:40:40', '2025-10-13 04:18:00'),
 (12, 'Pramuka', 'Pak Is', 'Sabtu', 50, '2025-10-09 19:56:22', '2025-10-09 19:57:08', '2025-10-09 19:57:08'),
 (13, 'aaa', 'sss', 'xxx', 12, '2025-10-09 20:18:44', '2025-10-09 20:24:38', '2025-10-09 20:24:38'),
 (14, 'cccc', 'sss', 'xxx', 10, '2025-10-09 20:19:53', '2025-10-09 20:24:42', '2025-10-09 20:24:42'),
-(15, 'Lukis', 'retna', 'rabu', 10, '2025-10-09 20:22:07', '2025-10-09 21:26:26', NULL),
-(16, 'PMR', 'pak Reihan', 'Kamis', 15, '2025-10-09 20:24:03', '2025-10-09 20:24:03', NULL);
+(15, 'Lukis', 'retna', 'rabu', 10, '2025-10-09 20:22:07', '2025-10-09 21:26:26', '2025-10-13 04:18:00'),
+(16, 'PMR', 'pak Reihan', 'Kamis', 15, '2025-10-09 20:24:03', '2025-10-09 20:24:03', '2025-10-13 04:18:00');
 
 -- --------------------------------------------------------
 
